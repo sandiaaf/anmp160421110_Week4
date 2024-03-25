@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/studentListFragment">
+    app:startDestination="@id/catListFragment">
 
     <fragment
         android:id="@+id/studentListFragment"
@@ -19,4 +19,9 @@
         android:name="com.sandiarta.advweek4.view.StudentDetailFragment"
         android:label="Student Detail"
         tools:layout="@layout/fragment_student_detail" />
+    <fragment
+        android:id="@+id/catListFragment"
+        android:name="com.sandiarta.advweek4.view.CatListFragment"
+        android:label="fragment_cat_list"
+        tools:layout="@layout/fragment_cat_list" />
 </navigation>
