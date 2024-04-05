@@ -28,8 +28,8 @@ class CatListAdapter(val catList:ArrayList<Cat>)
         holder.binding.textViewBreed.text = "Breed: "+catList[position].breed
         holder.binding.textViewAge.text = "Age: "+ catList[position].age + " month"
         holder.binding.buttonDetail.setOnClickListener {
-            val action = StudentListFragmentDirections.actionStudentDetailFragment()
-            Navigation.findNavController(it).navigate(action)
+//            val action = StudentListFragmentDirections.actionStudentDetailFragment ()
+//            Navigation.findNavController(it).navigate(action)
         }
     }
 
