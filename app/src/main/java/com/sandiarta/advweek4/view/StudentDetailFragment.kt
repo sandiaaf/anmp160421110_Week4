@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class StudentDetailFragment : Fragment() {
+class StudentDetailFragment : Fragment(), StudentUpdateClickListener {
     private lateinit var viewModel: DetailViewModel
     private lateinit var binding: FragmentStudentDetailBinding
     override fun onCreateView(
@@ -37,34 +37,49 @@ class StudentDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
         var id = StudentDetailFragmentArgs.fromBundle(requireArguments()).id;
         viewModel.fetch(id)
+
+        binding.listener = this
         observeViewModel()
 
     }
 
     fun observeViewModel() {
         viewModel.studentLD.observe(viewLifecycleOwner, Observer {
-            var student = it
+            binding.student = it
 
-            binding.buttonUpdate?.setOnClickListener {
-                Observable.timer(5, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
-                        Log.d("Messages", "five seconds")
-                        MainActivity.showNotification(
-                            student.name.toString(),
-                            "A new notification created",
-                            R.drawable.baseline_person_24
-                        )
-                    }
-            }
+//            binding.buttonUpdate?.setOnClickListener {
+//                Observable.timer(5, TimeUnit.SECONDS)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe {
+//                        Log.d("Messages", "five seconds")
+//                        MainActivity.showNotification(
+//                            student.name.toString(),
+//                            "A new notification created",
+//                            R.drawable.baseline_person_24
+//                        )
+//                    }
+//            }
 
-            Picasso.get().load(student.photoUrl).into(binding.imageView2)
-            binding.txtID.setText(it.id)
-            binding.txtName.setText(it.name)
-            binding.txtBod.setText(it.bod)
-            binding.txtPhone.setText(it.phone)
+//            Picasso.get().load(student.photoUrl).into(binding.imageView2)
+//            binding.txtID.setText(it.id)
+//            binding.txtName.setText(it.name)
+//            binding.txtBod.setText(it.bod)
+//            binding.txtPhone.setText(it.phone)
         })
+    }
 
+    override fun onStudentUpdateClick(v: View) {
+        Observable.timer(5, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Log.d("Messages", "five seconds")
+                MainActivity.showNotification(
+                    binding.student!!.name!!.toString(),
+                    "A new notification created",
+                    R.drawable.baseline_person_24
+                )
+            }
     }
 }
