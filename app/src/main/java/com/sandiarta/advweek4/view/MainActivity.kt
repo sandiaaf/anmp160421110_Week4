@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                 priority = NotificationCompat.PRIORITY_DEFAULT
                 setAutoCancel(true)
             }
+        
 
 
     }
