@@ -80,6 +80,8 @@ class StudentDetailFragment : Fragment(), StudentUpdateClickListener {
                     "A new notification created",
                     R.drawable.baseline_person_24
                 )
+                Log.d("Messages", "Notif")
+
             }
     }
 }
