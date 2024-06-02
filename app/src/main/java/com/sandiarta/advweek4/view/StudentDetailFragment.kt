@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class StudentDetailFragment : Fragment(), StudentUpdateClickListener {
+class StudentDetailFragment : Fragment(), StudentNotifClickListener, StudentUpdateClickListener{
     private lateinit var viewModel: DetailViewModel
     private lateinit var binding: FragmentStudentDetailBinding
     override fun onCreateView(
@@ -38,7 +39,8 @@ class StudentDetailFragment : Fragment(), StudentUpdateClickListener {
         var id = StudentDetailFragmentArgs.fromBundle(requireArguments()).id;
         viewModel.fetch(id)
 
-        binding.listener = this
+        binding.listenerUpdate = this
+        binding.listenerNotif= this
         observeViewModel()
 
     }
@@ -69,7 +71,7 @@ class StudentDetailFragment : Fragment(), StudentUpdateClickListener {
         })
     }
 
-    override fun onStudentUpdateClick(v: View) {
+    override fun onStudentNotifClick(v: View) {
         Observable.timer(5, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -83,5 +85,9 @@ class StudentDetailFragment : Fragment(), StudentUpdateClickListener {
                 Log.d("Messages", "Notif")
 
             }
+    }
+
+    override fun onStudentUpdateClick(v: View) {
+        Toast.makeText(context, "UPDATE Student "+ binding.student!!.name!!.toString(), Toast.LENGTH_SHORT).show()
     }
 }
